@@ -21,10 +21,36 @@ function generateWordElem(word, highlightColor) {
   return wordElem;
 }
 
+function getEveryNth() {
+  var everyNthSelect = document.getElementById('every-nth-select');
+
+  console.log("== everyNthSelect.value:", everyNthSelect.value);
+  console.log("  -- typeof(everyNthSelect.value):", typeof(everyNthSelect.value));
+
+  var n = parseInt(everyNthSelect.value);
+  console.log("== n:", n);
+  console.log("  -- typeof(n):", typeof(n));
+
+  return n;
+}
+
+function getHighlightColor() {
+  var selectedHighlightColorRadio = document.querySelector('input[name="highlight-color"]:checked');
+  console.log("== selectedHighlightColorRadio:", selectedHighlightColorRadio);
+  return selectedHighlightColorRadio.value;
+}
+
 function handleAddWordButtonClick(event) {
   var word = allWords[currentWord];
+  console.log("== word:", word);
   if (word) {
-    var wordElem = generateWordElem(word);
+    var n = getEveryNth();
+    var highlight;
+    if (!((currentWord + 1) % n)) {
+      highlight = getHighlightColor();
+    }
+
+    var wordElem = generateWordElem(word, highlight);
 
     var container = event.currentTarget.parentNode.parentNode;
     var wordsContainer = container.querySelector('.words-container');
